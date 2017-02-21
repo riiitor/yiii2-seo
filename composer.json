@@ -1,0 +1,21 @@
+{
+  "name": "riiitor/yii2-seo",
+  "description": "Seo component for YII2",
+  "keywords": ["yii", "seo"],
+  "type": "yii2-extension",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Ruslan Bakhshiev",
+      "email": "riiitor@gmail.com"
+    }
+  ],
+  "require": {
+    "yiisoft/yii2": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "riiitor\\seo\\": ""
+    }
+  }
+}
