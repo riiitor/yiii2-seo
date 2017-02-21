@@ -20,7 +20,7 @@ class SeoBehavior extends Behavior {
     public function create() {
         $model = new Seo();
 
-        $model->model_class = $this->owner->className();
+        $model->model_class = $this->getModelClass($this->owner);
         $model->model_id = $this->owner->id;
 
         if ($model->load(Yii::$app->request->post())) {
@@ -30,12 +30,12 @@ class SeoBehavior extends Behavior {
 
     public function update() {
 
-        $model = Seo::find()->where(['model_class' => $this->owner->className(), 'model_id' => $this->owner->id])->one();
+        $model = Seo::find()->where(['model_class' => $this->getModelClass($this->owner), 'model_id' => $this->owner->id])->one();
 
         if (!$model) {
             $model = new Seo();
 
-            $model->model_class = $this->owner->className();
+            $model->model_class = $this->getModelClass($this->owner);
             $model->model_id = $this->owner->id;
         }
 
@@ -45,7 +45,7 @@ class SeoBehavior extends Behavior {
     }
 
     public function delete() {
-        $model = Seo::find()->where(['model_class' => $this->owner->className(), 'model_id' => $this->owner->id])->one();
+        $model = Seo::find()->where(['model_class' => $this->getModelClass($this->owner), 'model_id' => $this->owner->id])->one();
 
         if ($model) {
             $model->delete();
@@ -53,7 +53,7 @@ class SeoBehavior extends Behavior {
     }
 
     public function registerSeo() {
-        $seoModel = Seo::find()->where(['model_class' => $this->owner->className(), 'model_id' => $this->owner->id])->one();
+        $seoModel = Seo::find()->where(['model_class' => $this->getModelClass($this->owner), 'model_id' => $this->owner->id])->one();
         $view = Yii::$app->getView();
 
         if ($seoModel) {
@@ -61,5 +61,9 @@ class SeoBehavior extends Behavior {
             $view->registerMetaTag(['name' => 'keywords', 'content' => $seoModel->keywords]);
             $view->registerMetaTag(['name' => 'description', 'content' => $seoModel->description]);
         }
+    }
+
+    private function getModelClass($model) {
+        return (new \ReflectionClass($model))->getShortName();
     }
 }
