@@ -19,7 +19,9 @@ class SeoWidget extends Widget {
     public function run() {
 
         if ($this->model) {
-            $seoModel = Seo::find()->where(['model_class' => $this->model->className(), 'model_id' => $this->model->id])->one();
+            $modelClass = (new \ReflectionClass($this->model))->getShortName();
+
+            $seoModel = Seo::find()->where(['model_class' => $modelClass, 'model_id' => $this->model->id])->one();
             if (!$seoModel) {
                 $seoModel = new Seo();
             }
