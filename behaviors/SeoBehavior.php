@@ -57,7 +57,7 @@ class SeoBehavior extends Behavior {
         $view = Yii::$app->getView();
 
         if ($seoModel) {
-            $view->title = Html::encode($seoModel->title);
+            $view->title = $seoModel->title;
             $view->registerMetaTag(['name' => 'keywords', 'content' => $seoModel->keywords]);
             $view->registerMetaTag(['name' => 'description', 'content' => $seoModel->description]);
         }
